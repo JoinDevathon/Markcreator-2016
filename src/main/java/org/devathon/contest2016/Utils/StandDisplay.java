@@ -12,9 +12,20 @@ public class StandDisplay {
 	private ArmorStand stand;
 	
 	private Vector animationVelocity = new Vector(0, 0.075, 0);
-	private double lifetime = 30;
+	private int lifetime = 30;
+	
+	public StandDisplay(Location loc, String text, Vector animationVelocity, int lifetime) {
+		this.animationVelocity = animationVelocity;
+		this.lifetime = lifetime;
+		
+		spawn(loc, text);
+	}
 	
 	public StandDisplay(Location loc, String text) {
+		spawn(loc, text);
+	}
+	
+	public void spawn(Location loc, String text) {
 		stand = (ArmorStand) loc.getWorld().spawnEntity(loc.add(0.5, -1.5, 0.5), EntityType.ARMOR_STAND);
 		stand.setVisible(false);
 		stand.setBasePlate(false);
@@ -22,6 +33,7 @@ public class StandDisplay {
 		stand.setCanPickupItems(false);
 		stand.setGravity(false);
 		stand.setInvulnerable(true);
+		stand.setSilent(true);
 		
 		stand.setCustomName(text);
 		stand.setCustomNameVisible(true);

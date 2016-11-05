@@ -2,8 +2,11 @@ package org.devathon.contest2016.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.util.BlockIterator;
@@ -71,6 +74,14 @@ public class BlockUtils {
 			if(!relative.getType().name().contains(typeKey)) {
 				fill(relative.getLocation(), cornerMat, typeKey);
 			}
+		}
+	}
+	
+	public static void spawnTrees(Chunk chunk) {
+		int treeCount = IntegerUtils.getRandom(5, 10);
+		
+		for(int x = 0; x < treeCount; x++) {
+			chunk.getWorld().generateTree(chunk.getBlock(0, 0, 0).getRelative(IntegerUtils.getRandom(15), 4, IntegerUtils.getRandom(15)).getLocation(), TreeType.TREE);
 		}
 	}
 }

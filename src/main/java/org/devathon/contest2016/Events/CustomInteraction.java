@@ -5,9 +5,15 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
 import org.devathon.contest2016.Utils.BlockUtils;
 import org.devathon.contest2016.Utils.StandDisplay;
+import org.devathon.contest2016.Utils.StringUtils;
+import org.devathon.contest2016.World.Ores.Pile;
+import org.devathon.contest2016.World.Ores.PileManager;
 
 public class CustomInteraction implements Listener {
 
@@ -22,10 +28,30 @@ public class CustomInteraction implements Listener {
 		
     	event.setCancelled(true);
     		
-    	if(event.getBlock().getType().name().contains("LOG")) {
+    	if(block.getType().name().contains("LOG")) {
     		int totalBroken = breakAndCountAllRelatives(block, "LOG");
     		
     		new StandDisplay(block.getLocation(), "+" + totalBroken + " wood");
+		}
+    	
+    	if(PileManager.isOre(block.getType())) {
+    		Pile pile = PileManager.createOrReturnPile(block);
+    		
+    		pile.dig();
+    		new StandDisplay(block.getLocation().add(0, 2, 0), "+1 " + StringUtils.formatMaterialName(pile.getMaterial()));
+    	}
+	}
+	
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			Block block = event.getClickedBlock();
+			
+			if(PileManager.isOre(block.getType())) {
+				Pile pile = PileManager.createOrReturnPile(block);
+				
+				new StandDisplay(block.getLocation().add(0, 1, 0), pile.getAmountLeft() + "", new Vector(), 20);
+			}
 		}
 	}
 	

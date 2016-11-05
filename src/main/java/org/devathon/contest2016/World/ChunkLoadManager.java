@@ -30,6 +30,7 @@ public class ChunkLoadManager implements Listener {
 				int spawnCoal = IntegerUtils.getRandom(30);
 				int spawnIron = IntegerUtils.getRandom(30);
 				int spawnStone = IntegerUtils.getRandom(30);
+				int spawnTrees = IntegerUtils.getRandom(10);
 				
 				if(spawnWater == 0) {
 					BlockUtils.makePileFormation(chunk.getBlock(8, 3, 8).getLocation(), Material.STATIONARY_WATER);
@@ -42,7 +43,11 @@ public class ChunkLoadManager implements Listener {
 				
 				} else if(spawnStone == 0) {
 					BlockUtils.makePileFormation(chunk.getBlock(8, 3, 8).getLocation(), Material.STONE);
+				
+				} else if(spawnTrees == 0) {
+					BlockUtils.spawnTrees(chunk);
 				}
+				
 			}
 		}, 1);
 	}
