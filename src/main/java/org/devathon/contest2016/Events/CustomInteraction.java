@@ -1,5 +1,6 @@
 package org.devathon.contest2016.Events;
 
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,13 +16,17 @@ public class CustomInteraction implements Listener {
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
 		
+		if(player.getGameMode() == GameMode.CREATIVE) {
+			return;
+		}
+		
     	event.setCancelled(true);
     		
     	if(event.getBlock().getType().name().contains("LOG")) {
     		int totalBroken = breakAndCountAllRelatives(block, "LOG");
     		
     		new StandDisplay(block.getLocation(), "+" + totalBroken + " wood");
-    	}
+		}
 	}
 	
 	public int breakAndCountAllRelatives(Block block, String typeKey) {
