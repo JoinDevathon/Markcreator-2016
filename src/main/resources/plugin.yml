@@ -1,7 +1,7 @@
-name: Markcreator-2016
+name: Factorio
 description: A project for the Devathon contest
-version: 1.0.0
+version: 1.0
 author: Markcreator
 
-main: org.devathon.contest2016.DevathonPlugin
+main: org.devathon.contest2016.Factorio
 
