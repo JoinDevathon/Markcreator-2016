@@ -37,7 +37,7 @@ public class TransportBelt extends BuildingType {
 
 	@Override
 	public void remove(Building building) {
-		//TODO
+		//Don't remove
 	}
 
 }

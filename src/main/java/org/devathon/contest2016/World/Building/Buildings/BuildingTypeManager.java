@@ -11,6 +11,8 @@ public class BuildingTypeManager {
 	public BuildingTypeManager() {
 		buildingTypes.add(new TransportBelt());
 		buildingTypes.add(new Drill());
+		buildingTypes.add(new Inserter());
+		buildingTypes.add(new Chest());
 	}
 	
 	public static ArrayList<BuildingType> getAllBuildingTypes() {

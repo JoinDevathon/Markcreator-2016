@@ -13,7 +13,8 @@ public class PileManager {
 	
 	public static void createPile(Location loc, Material mat, int amount) {
 		Pile pile = new Pile(mat, loc, amount);
-		
+		loc.getBlock().setType(mat);
+			
 		piles.add(pile);
 	}
 	
@@ -51,7 +52,7 @@ public class PileManager {
 		return ores.contains(mat);
 	}
 	
-	public static Pile createAndReturnPile(Block block, int amount) {
+	public static Pile createAndReturnPile(Block block, int amount) { //TODO FIX AMOUNT SYSTEM
 		Location blockLoc = block.getLocation();
 		
 		if(!isPile(blockLoc)) {

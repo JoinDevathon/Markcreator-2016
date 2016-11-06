@@ -1,5 +1,6 @@
 package org.devathon.contest2016.Utils;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,5 +25,23 @@ public class InventoryUtils {
 		} else {
 			player.getInventory().setItemInMainHand(null);
 		}
+	}
+	
+	public static ItemStack removeFirstFromInv(Inventory inv) {
+		for(ItemStack stack : inv.getContents()) {
+			if(stack != null) {
+				ItemStack one = stack.clone();
+				one.setAmount(1);
+				
+				if(stack.getAmount() == 1) {
+					stack.setType(Material.AIR);
+				} else {
+					stack.setAmount(stack.getAmount() - 1);
+				}
+				
+				return one;
+			}
+		}
+		return null;
 	}
 }

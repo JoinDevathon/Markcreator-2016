@@ -11,7 +11,6 @@ import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockIterator;
 
 public class BlockUtils {

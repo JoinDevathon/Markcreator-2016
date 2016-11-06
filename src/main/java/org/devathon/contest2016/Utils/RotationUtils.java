@@ -85,4 +85,19 @@ public class RotationUtils {
 		
 		return new Vector();
 	}
+	
+	public static Vector getStairInputDirectionVector(byte rotation) {
+		switch(rotation) {
+		case 3:
+			return new Vector(0, 0, 1);
+		case 2:
+			return new Vector(0, 0, -1);
+		case 1:
+			return new Vector(1, 0, 0);
+		case 0:
+			return new Vector(-1, 0, 0);
+		}
+		
+		return new Vector();
+	}
 }

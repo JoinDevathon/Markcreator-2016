@@ -1,6 +1,7 @@
 package org.devathon.contest2016;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -11,6 +12,8 @@ import org.devathon.contest2016.Events.MovementListener;
 import org.devathon.contest2016.World.ChunkLoadManager;
 import org.devathon.contest2016.World.FactorioWorldManager;
 import org.devathon.contest2016.World.Scheduler;
+import org.devathon.contest2016.World.Building.Buildings.Building;
+import org.devathon.contest2016.World.Building.Buildings.BuildingManager;
 import org.devathon.contest2016.World.Building.Buildings.BuildingTypeManager;
 import org.devathon.contest2016.World.Ores.Pile;
 import org.devathon.contest2016.World.Ores.PileManager;
@@ -33,6 +36,7 @@ public class Factorio extends JavaPlugin implements Listener {
     	new Scheduler();
     	
     	FactorioWorldManager.createWorld("factorio");
+    	Bukkit.getWorld("factorio").setDifficulty(Difficulty.PEACEFUL);
     }
 
     @Override
@@ -41,6 +45,10 @@ public class Factorio extends JavaPlugin implements Listener {
         	if(pile.getAmountLeft() == 1) {
         		pile.getLocation().getBlock().setType(Material.AIR);
         	}
+        }
+        
+        for(Building building : BuildingManager.getAllBuildings()) {
+        	building.getBuildingType().removeBuilding(building);
         }
 	}
     
