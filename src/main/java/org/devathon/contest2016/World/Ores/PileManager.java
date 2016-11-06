@@ -2,29 +2,47 @@ package org.devathon.contest2016.World.Ores;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.util.Vector;
+import org.devathon.contest2016.Utils.LocationUtils;
 
 public class PileManager {
 
-	private static HashMap<Vector, Pile> locationPile = new HashMap<Vector, Pile>();
+	private static ArrayList<Pile> piles = new ArrayList<Pile>();
 	
-	public static void createPile(Location loc, Material mat) {
-		Pile pile = new Pile(mat, loc);
+	public static void createPile(Location loc, Material mat, int amount) {
+		Pile pile = new Pile(mat, loc, amount);
 		
-		locationPile.put(loc.toVector(), pile);
+		piles.add(pile);
 	}
 	
-	public static boolean isPile(Vector vec) {
-		return locationPile.containsKey(vec);
+	public static boolean isPile(Location loc) {
+		for(Pile pile : piles) {
+			if(pile.getLocation().toVector().equals(loc.toVector())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public static Pile getPile(Vector vec) {
-		return locationPile.get(vec);
+	public static Pile getPile(Location loc) {
+		for(Pile pile : piles) {
+			if(pile.getLocation().toVector().equals(loc.toVector())) {
+				return pile;
+			}
+		}
+		return null;
+	}
+	
+	public static ArrayList<Pile> getAllPiles() {
+		return piles;
+	}
+	
+	public static void removePile(Location loc) {
+		piles.remove(getPile(loc));
+		
+		LocationUtils.resetBlock(loc);
 	}
 	
 	public static boolean isOre(Material mat) {
@@ -33,17 +51,13 @@ public class PileManager {
 		return ores.contains(mat);
 	}
 	
-	public static Pile createOrReturnPile(Block block) {
-		Vector blockVec = block.getLocation().toVector();
+	public static Pile createAndReturnPile(Block block, int amount) {
+		Location blockLoc = block.getLocation();
 		
-		if(isOre(block.getType())) {
-			if(!isPile(blockVec)) {
-				createPile(block.getLocation(), block.getType());
-			}
-			
-			return getPile(blockVec);
+		if(!isPile(blockLoc)) {
+			createPile(blockLoc, block.getType(), amount);
 		}
 		
-		return null;
+		return getPile(blockLoc);
 	}
 }

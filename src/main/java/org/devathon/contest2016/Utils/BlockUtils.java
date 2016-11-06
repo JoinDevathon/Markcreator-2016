@@ -1,6 +1,7 @@
 package org.devathon.contest2016.Utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Chunk;
@@ -9,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.BlockIterator;
 
 public class BlockUtils {
@@ -83,5 +86,22 @@ public class BlockUtils {
 		for(int x = 0; x < treeCount; x++) {
 			chunk.getWorld().generateTree(chunk.getBlock(0, 0, 0).getRelative(IntegerUtils.getRandom(15), 4, IntegerUtils.getRandom(15)).getLocation(), TreeType.TREE);
 		}
+	}
+	
+	public static int breakAndCountAllRelatives(Block block, String typeKey) {
+		int count = 1;
+		block.breakNaturally();
+		
+		for(Block relative : BlockUtils.getRelativeBlocks(block)) {
+			if(relative.getType().name().contains(typeKey)) {
+				count += breakAndCountAllRelatives(relative, typeKey);
+			}
+		}
+		
+		return count;
+	}
+	
+	public static Collection<Entity> getAllEntitiesInBlock(Location loc) {
+		return loc.getWorld().getNearbyEntities(loc.add(0.5, 0.5, 0.5), 0.5, 0.5, 0.5);
 	}
 }

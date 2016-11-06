@@ -1,6 +1,8 @@
 package org.devathon.contest2016.Utils;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtils {
 
@@ -14,4 +16,13 @@ public class InventoryUtils {
 		return -1;
 	}
 	
+	public static void removeOneFromHand(Player player) {
+		ItemStack mainItem = player.getInventory().getItemInMainHand();
+		
+		if(mainItem.getAmount() > 1) {
+			mainItem.setAmount(mainItem.getAmount() - 1);
+		} else {
+			player.getInventory().setItemInMainHand(null);
+		}
+	}
 }

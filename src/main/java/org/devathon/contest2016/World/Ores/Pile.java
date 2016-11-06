@@ -12,10 +12,17 @@ public class Pile {
 	private Location loc;
 	private int amountLeft;
 	
-	public Pile(Material mat, Location loc) {
+	public Pile(Material mat, Location loc, int amount) {
 		this.mat = mat;
 		this.loc = loc;
-		amountLeft = 3000;
+		amountLeft = amount;
+	}
+	
+	public void move(Location newLoc) {
+		loc.getBlock().setType(Material.AIR);
+		newLoc.getBlock().setType(mat);
+		
+		loc = newLoc;
 	}
 	
 	public void dig() {
@@ -23,6 +30,10 @@ public class Pile {
 		
 		Item item = loc.getWorld().dropItem(loc.clone().add(0.5, 1, 0.5), new ItemStack(mat));
 		item.setVelocity(new Vector());
+		
+		if(amountLeft == 0) {
+			PileManager.removePile(loc);
+		}
 	}
 	
 	public Material getMaterial() {
