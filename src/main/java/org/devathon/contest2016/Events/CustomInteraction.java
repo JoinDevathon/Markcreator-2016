@@ -1,5 +1,6 @@
 package org.devathon.contest2016.Events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
+import org.devathon.contest2016.Factorio;
 import org.devathon.contest2016.Utils.BlockUtils;
 import org.devathon.contest2016.Utils.StandDisplay;
 import org.devathon.contest2016.Utils.StringUtils;
@@ -65,17 +67,27 @@ public class CustomInteraction implements Listener {
 		if(!FactorioWorldManager.isInFactorioMode(player)) {
 			return;
 		}
-
+		
 		if(event.getHand() == EquipmentSlot.HAND) {
 			if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				Block block = event.getClickedBlock();
 				
 				if(Preview.hasPreview(player)) {
+					Preview preview = Preview.getPreview(player);
+					preview.clean();
+					
 					event.setCancelled(true);
 					event.getClickedBlock().getRelative(event.getBlockFace()).setType(Material.AIR);
 					
-					Preview.getPreview(player).getBuildingType().buildBuilding(player);
-					player.updateInventory();
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Factorio.getInstance(), new Runnable() {
+						public void run() {
+							if(Preview.hasPreview(player)) {
+								Preview.getPreview(player).getBuildingType().buildBuilding(player);
+								player.updateInventory();
+							}
+						}
+						
+					}, 1);
 					
 				} else if(PileManager.isOre(block.getType())) {
 					Pile pile = PileManager.createAndReturnPile(block, 3000);

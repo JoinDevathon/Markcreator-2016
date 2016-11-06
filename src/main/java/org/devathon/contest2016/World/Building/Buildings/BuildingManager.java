@@ -2,27 +2,28 @@ package org.devathon.contest2016.World.Building.Buildings;
 
 import java.util.ArrayList;
 
-import org.bukkit.Material;
+import org.bukkit.Location;
 
 public class BuildingManager {
 
-	private static ArrayList<BuildingType> buildingTypes = new ArrayList<BuildingType>();
+	private static ArrayList<Building> buildings = new ArrayList<Building>();
 	
-	public BuildingManager() {
-		buildingTypes.add(new TransportBelt());
+	public static ArrayList<Building> getAllBuildings() {
+		return buildings;
 	}
 	
-	public static ArrayList<BuildingType> getAllBuildingTypes() {
-		return buildingTypes;
+	public static void addBuilding(Building building) {
+		buildings.add(building);
 	}
 	
-	public static BuildingType getBuilding(Material mat) {
-		for(BuildingType type : getAllBuildingTypes()) {
-			if(type.getMaterial() == mat) {
-				return type;
+	public static Building getBuilding(Location loc) {
+		for(Building building : getAllBuildings()) {
+			if(building.getLocation().toVector().equals(loc.toVector())) {
+				return building;
 			}
 		}
 		
 		return null;
 	}
+	
 }

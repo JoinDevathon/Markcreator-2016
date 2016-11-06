@@ -9,16 +9,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
 import org.devathon.contest2016.Utils.RotationUtils;
+import org.devathon.contest2016.World.Ores.PileManager;
 
-public class TransportBelt extends BuildingType {
+public class Drill extends BuildingType {
 
 	@SuppressWarnings("deprecation")
-	public TransportBelt() {
-		super(new MaterialData(Material.INK_SACK, (byte) 0));
+	public Drill() {
+		super(new MaterialData(Material.INK_SACK, (byte) 1));
 	}
 
 	public boolean canPlace(Location loc) {
-		return loc.getBlock().getType() == Material.GRASS;
+		return PileManager.isOre(loc.getBlock().getType()) && loc.getBlockY() == 3;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -26,13 +27,13 @@ public class TransportBelt extends BuildingType {
 	public void build(Player player, Location loc) {
 		String direction = RotationUtils.getPlayerDirection(player);
 		
-		loc.getBlock().setType(Material.PISTON_BASE);
-		loc.getBlock().setData(RotationUtils.directionToPistonRotation(direction));
+		loc.getBlock().getRelative(0, 1, 0).setType(Material.COBBLESTONE_STAIRS);
+		loc.getBlock().getRelative(0, 1, 0).setData(RotationUtils.directionToStairRotation(direction));
 	}
 
 	@Override
 	public ArrayList<Vector> getRelativePreviewVectors() {
-		return new ArrayList<Vector>( Arrays.asList( new Vector(0, 0, 0) ));
+		return new ArrayList<Vector>( Arrays.asList( new Vector(0, 1, 0) ));
 	}
 
 	@Override

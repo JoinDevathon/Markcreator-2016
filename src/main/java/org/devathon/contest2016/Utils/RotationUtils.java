@@ -55,4 +55,34 @@ public class RotationUtils {
 		
 		return new Vector();
 	}
+	
+	public static byte directionToStairRotation(String direction) {
+		switch(direction) {
+		case "S":
+			return 3;
+		case "N":
+			return 2;
+		case "E":
+			return 1;
+		case "W":
+			return 0;
+		}
+		
+		return 0;
+	}
+	
+	public static Vector getStairOutputDirectionVector(byte rotation) {
+		switch(rotation) {
+		case 3:
+			return new Vector(0, 0, -1);
+		case 2:
+			return new Vector(0, 0, 1);
+		case 1:
+			return new Vector(-1, 0, 0);
+		case 0:
+			return new Vector(1, 0, 0);
+		}
+		
+		return new Vector();
+	}
 }

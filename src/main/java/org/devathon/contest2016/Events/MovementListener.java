@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.devathon.contest2016.Factorio;
 import org.devathon.contest2016.World.FactorioWorldManager;
 import org.devathon.contest2016.World.Building.Preview;
-import org.devathon.contest2016.World.Building.Buildings.BuildingManager;
+import org.devathon.contest2016.World.Building.Buildings.BuildingTypeManager;
 import org.devathon.contest2016.World.Building.Buildings.BuildingType;
 
 public class MovementListener implements Listener {
@@ -39,7 +39,7 @@ public class MovementListener implements Listener {
 			public void run() {
 				Preview.cleanIfNeccesary(player);
 				
-				BuildingType buildingType = BuildingManager.getBuilding(player.getItemInHand().getType());
+				BuildingType buildingType = BuildingTypeManager.getBuilding(player.getItemInHand().getData());
 				if(buildingType != null) {
 					new Preview(player, buildingType);
 				}

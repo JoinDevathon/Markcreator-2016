@@ -11,7 +11,7 @@ import org.devathon.contest2016.Events.MovementListener;
 import org.devathon.contest2016.World.ChunkLoadManager;
 import org.devathon.contest2016.World.FactorioWorldManager;
 import org.devathon.contest2016.World.Scheduler;
-import org.devathon.contest2016.World.Building.Buildings.BuildingManager;
+import org.devathon.contest2016.World.Building.Buildings.BuildingTypeManager;
 import org.devathon.contest2016.World.Ores.Pile;
 import org.devathon.contest2016.World.Ores.PileManager;
 
@@ -29,7 +29,7 @@ public class Factorio extends JavaPlugin implements Listener {
     	pm.registerEvents(new ChunkLoadManager(), this);
     	pm.registerEvents(new MovementListener(), this);
 
-    	new BuildingManager();
+    	new BuildingTypeManager();
     	new Scheduler();
     	
     	FactorioWorldManager.createWorld("factorio");
